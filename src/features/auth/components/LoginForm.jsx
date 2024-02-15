@@ -2,7 +2,7 @@ import { useState } from "react"
 import axios from "axios"
 import { validateLogin } from "../validations/validate-login"
 import useAuth from "../hooks/use-auth"
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 export default function LoginForm({ onOpen }) {
     const [email, setEmail] = useState('')

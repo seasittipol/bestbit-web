@@ -14,7 +14,7 @@ export default function MarketPage() {
                 console.log(price);
             }
             fetchPrice()
-        }, 60 * 1000)
+        }, 15 * 1000)
     })
 
     return (

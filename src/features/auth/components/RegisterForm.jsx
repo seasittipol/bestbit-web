@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
-import { Link } from "react-router-dom"
 import { validateRegister } from "../validations/validate-register"
+import { toast } from "react-toastify"
 
 export default function RegisterForm({ onOpen }) {
     const [email, setEmail] = useState('')
@@ -35,7 +35,8 @@ export default function RegisterForm({ onOpen }) {
                 onOpen(false)
             }
         } catch (err) {
-            next(err)
+            console.log(err.message);
+            toast.error(err.message)
         }
     }
 

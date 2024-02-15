@@ -11,12 +11,11 @@ export default function AuthContextProvider({ children }) {
     useEffect(async () => {
         try {
             const token = localStorage.getItem('ACCESS_TOKEN')
-            console.log(token);
             if (token) {
-                const response = await axios.get('http://localhost:8000/auth/me')
-                console.log(response);
+                const response = await axios.get('http://localhost:8000/auth/me', {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
                 setAuthUser(response.data.user)
-                console.log(authUser);
             }
         } catch (err) {
 

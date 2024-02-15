@@ -1,6 +1,5 @@
 import { useState } from "react"
 import axios from "axios"
-import { Link } from "react-router-dom"
 import { validateLogin } from "../validations/validate-login"
 import useAuth from "../hooks/use-auth"
 import { toast, ToastContainer } from "react-toastify";
@@ -25,6 +24,7 @@ export default function LoginForm({ onOpen }) {
             const data = { email, password }
             validateLogin(data)
             const response = await axios.post(`http://localhost:8000/auth/login`, data)
+            console.log(response.data);
             localStorage.setItem('ACCESS_TOKEN', response.data.accessToken)
             setAuthUser(response.data.user)
             toast.success('Log in success')

@@ -35,14 +35,6 @@ const router = createBrowserRouter([
             {
                 path: 'dashboard',
                 element: <DashboardPage />
-            },
-            {
-                path: 'login',
-                element: <LoginPage />
-            },
-            {
-                path: 'register',
-                element: <RegisterPage />
             }
         ]
     }

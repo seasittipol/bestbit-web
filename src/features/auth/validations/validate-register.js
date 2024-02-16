@@ -3,7 +3,7 @@ export const validateRegister = data => {
     if (email.trim() === '' || email.indexOf('@') < 0) {
         throw new Error('email is not match')
     }
-    if (mobile.trim() === '' || typeof mobile !== 'number' || mobile.length !== 10) {
+    if (mobile.trim() === '' || mobile.length !== 10) {
         throw new Error('mobile is incorrect')
     }
     if (password.trim() === '' || password.length < 6) {

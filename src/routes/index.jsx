@@ -7,6 +7,7 @@ import Header from '../layouts/Header'
 import ProtectRoute from '../features/auth/components/ProtectRoute'
 import RegisterPage from '../pages/RegisterPage'
 import RedirectRoute from '../features/auth/components/RedirectRoute'
+import DepositPage from '../pages/DepositPage'
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
             {
                 path: 'dashboard/:userId',
                 element: <DashboardPage />
+            },
+            {
+                path: 'dashboard/deposit',
+                element: <DepositPage />
             }
         ]
     }

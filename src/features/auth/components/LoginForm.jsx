@@ -22,13 +22,15 @@ export default function LoginForm({ onOpen }) {
         try {
             e.preventDefault()
             localStorage.removeItem('ACCESS_TOKEN')
-            const data = { email, password }
-            validateLogin(data)
-            const response = await axios.post(`http://localhost:8000/auth/login`, data)
-            console.log(response.data);
-            localStorage.setItem('ACCESS_TOKEN', response.data.accessToken)
-            setAuthUser(response.data.user)
-            toast.success('Log in success')
+            if (!localStorage.getItem('ACCESS_TOKEN')) {
+                const data = { email, password }
+                validateLogin(data)
+                const response = await axios.post(`http://localhost:8000/auth/login`, data)
+                console.log(response.data);
+                localStorage.setItem('ACCESS_TOKEN', response.data.accessToken)
+                setAuthUser(response.data.user)
+                toast.success('Log in success')
+            }
 
         } catch (err) {
             console.log(err);

@@ -67,7 +67,7 @@ export default function ProfileForm() {
                 />)
                 : (<img
                     className="h-32 w-32 rounded-full"
-                    src={authUser ? authUser.profileImage : profileImage}
+                    src={authUser.profileImage ? authUser.profileImage : profileImage}
                 />)
             }
             <div className='w-full h-full flex justify-between '>

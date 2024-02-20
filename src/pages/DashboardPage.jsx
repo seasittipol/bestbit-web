@@ -1,6 +1,6 @@
 import BalanceForm from "../features/auth/components/BalanceForm";
-import ProfileForm from "../features/auth/components/ProfileForm";
-import WalletForm from "../features/auth/components/WalletForm";
+import ProfileForm from "../features/dashboard/components/ProfileForm";
+import WalletForm from "../features/dashboard/components/WalletForm";
 
 export default function DashboardPage() {
     return (

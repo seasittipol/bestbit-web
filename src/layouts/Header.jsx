@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../features/auth/hooks/use-auth";
 
 export default function Header() {
-    const { setAuthUser } = useAuth()
+    const { authUser: { id }, setAuthUser } = useAuth()
     const logout = () => {
         localStorage.removeItem('ACCESS_TOKEN')
         setAuthUser(null)
@@ -14,7 +14,7 @@ export default function Header() {
                 <Link to='/'>Markets</Link>
             </div>
             <div className="flex gap-4">
-                <Link to='/dashboard'>MyDashboard</Link>
+                <Link to={`/dashboard/${id}`}>MyDashboard</Link>
                 <button onClick={logout}>Log out</button>
             </div>
         </header>

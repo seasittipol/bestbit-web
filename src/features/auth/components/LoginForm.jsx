@@ -21,6 +21,7 @@ export default function LoginForm({ onOpen }) {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault()
+            localStorage.removeItem('ACCESS_TOKEN')
             const data = { email, password }
             validateLogin(data)
             const response = await axios.post(`http://localhost:8000/auth/login`, data)
@@ -30,8 +31,8 @@ export default function LoginForm({ onOpen }) {
             toast.success('Log in success')
 
         } catch (err) {
-            console.log(err.message);
-            toast.error(err.message)
+            console.log(err);
+            toast.error(err.response.data.message)
         }
     }
 

@@ -1,16 +1,17 @@
 import { useState } from "react";
-import priceTicket from "../../../api/current-price"
 import { useEffect } from "react";
+import priceTicket from "../../../api/current-price"
 
 export default function MarketForm() {
     const [price, setPrice] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         setTimeout(() => {
             const fetchPrice = async (req, res, next) => {
                 const response = await priceTicket()
-                console.log(response);
                 setPrice(response)
+                setLoading(false)
                 console.log(price);
             }
             fetchPrice()
@@ -57,17 +58,20 @@ export default function MarketForm() {
                 <div>$ {price[2]?.data.price || '-'}</div>
                 <div>-</div>
             </div>
-            <div className="grid grid-cols-3 mt-2">
-                <div className="flex gap-2">
-                    <img
-                        className="w-6 h-6"
-                        src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png"
-                    />
-                    <span>Solana</span>
+            {loading && <div>Loading...</div>}
+            {price.map(el => (
+                <div className="grid grid-cols-3 mt-2">
+                    <div className="flex gap-2">
+                        <img
+                            className="w-6 h-6 rounded-full"
+                            src="https://i.pinimg.com/736x/16/af/11/16af11cfede502db66e20f547474da79.jpg"
+                        />
+                        <span>{el?.data.symbol}</span>
+                    </div>
+                    <div>$ {el?.data.price || '-'}</div>
+                    <div>-</div>
                 </div>
-                <div>$ {price[3]?.data.price || '-'}</div>
-                <div>-</div>
-            </div>
+            ))}
         </div>
     )
 }

@@ -22,6 +22,8 @@ export default function AuthContextProvider({ children }) {
         }
     }, [])
 
+
+
     return (
         <AuthContext.Provider value={{ authUser, setAuthUser }}>
             {children}

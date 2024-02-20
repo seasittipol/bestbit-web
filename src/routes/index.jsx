@@ -33,7 +33,7 @@ const router = createBrowserRouter([
                 element: <MarketPage />
             },
             {
-                path: 'dashboard',
+                path: 'dashboard/:userId',
                 element: <DashboardPage />
             }
         ]

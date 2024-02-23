@@ -6,7 +6,6 @@ import WalletForm from "../features/dashboard/components/WalletForm";
 
 export default function DashboardPage() {
     const { authUser } = useAuth()
-    console.log(authUser);
     return (
         <div className="px-20 flex flex-col gap-4 mt-4">
             <ProfileForm />

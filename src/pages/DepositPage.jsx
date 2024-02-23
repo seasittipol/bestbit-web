@@ -1,5 +1,9 @@
+import DepositForm from "../features/auth/components/DepositForm";
+
 export default function DepositPage() {
     return (
-        <div>DepositPage</div>
+        <div className="px-20 mt-4">
+            <DepositForm />
+        </div>
     )
 }

@@ -4,6 +4,8 @@ import nameTicket from "../../../api/name-coin";
 import axios from "axios";
 import { toast } from "react-toastify";
 import symbolTicket from "../../../api/sympol-coin";
+import Button from "../../../layouts/Button";
+import { Link } from "react-router-dom";
 
 const initialize = {
     symbol: '',
@@ -104,56 +106,63 @@ export default function CoinTable() {
     }
 
     return (
-        <div className="bg-slate-600 min-h-10 rounded-lg py-2 px-4 fle flex-colx items-center">
-            <div className="grid grid-cols-3">
-                <div className="flex justify-between">
-                    <span>Symbol</span>
-                    <span>Name</span>
-                </div>
-                <div></div>
-                <div></div>
+        <>
+            <div className="flex justify-end">
+                <Link to='/dashboard/transaction'>
+                    <Button name='Transaction' />
+                </Link>
             </div>
-            <div className="flex gap-10">
-                <div className="flex flex-col mt-2 gap-2">
-                    {coinSymbol?.map(el => (
-                        <div className="flex gap-2">
-                            <img
-                                className="w-6 h-6 rounded-full"
-                                src="https://i.pinimg.com/736x/16/af/11/16af11cfede502db66e20f547474da79.jpg"
-                            />
-                            <div className="h-[26px]" key={el}>{el} </div>
-                        </div>
-                    ))}
+            <div className="bg-slate-600 min-h-10 rounded-lg py-2 px-4 fle flex-colx items-center">
+                <div className="grid grid-cols-3">
+                    <div className="flex justify-between">
+                        <span>Symbol</span>
+                        <span>Name</span>
+                    </div>
+                    <div></div>
+                    <div></div>
                 </div>
-                <div>
-                    {coinName?.map(el => (
-                        <div key={el} className="grid grid-cols-2 mt-2 gap-4">
+                <div className="flex gap-10">
+                    <div className="flex flex-col mt-2 gap-2">
+                        {coinSymbol?.map(el => (
                             <div className="flex gap-2">
-                                {isEdit && editRow == el
-                                    ? <input value={editName || el} onChange={handleChangeEditCoin}></input>
-                                    : <span>{el}</span>
-                                }
+                                <img
+                                    className="w-6 h-6 rounded-full"
+                                    src="https://i.pinimg.com/736x/16/af/11/16af11cfede502db66e20f547474da79.jpg"
+                                />
+                                <div className="h-[26px]" key={el}>{el} </div>
                             </div>
-                            <div className="flex gap-4">
-                                {isEdit && editRow == el
-                                    ? <button className="border px-4 rounded-full" name={el} onClick={handleSaveCoin}>Save</button>
-                                    : <button className="border px-4 rounded-full" name={el} onClick={handleEditCoin}>Edit</button>
-                                }
-                                <button className="border px-2 rounded-full" name={el} onClick={handleDeleteCoin}>Delete</button>
+                        ))}
+                    </div>
+                    <div>
+                        {coinName?.map(el => (
+                            <div key={el} className="grid grid-cols-2 mt-2 gap-4">
+                                <div className="flex gap-2">
+                                    {isEdit && editRow == el
+                                        ? <input value={editName || el} onChange={handleChangeEditCoin}></input>
+                                        : <span>{el}</span>
+                                    }
+                                </div>
+                                <div className="flex gap-4">
+                                    {isEdit && editRow == el
+                                        ? <button className="border px-4 rounded-full" name={el} onClick={handleSaveCoin}>Save</button>
+                                        : <button className="border px-4 rounded-full" name={el} onClick={handleEditCoin}>Edit</button>
+                                    }
+                                    <button className="border px-2 rounded-full" name={el} onClick={handleDeleteCoin}>Delete</button>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+                </div>
+                <div className="flex flex-col gap-2 mt-4">
+                    <span>symbol</span>
+                    <input name="symbol" value={addCoin.symbol} onChange={handleChange}></input>
+                    <span>name</span>
+                    <input name="name" value={addCoin.name} onChange={handleChange}></input>
+                    <span>image</span>
+                    <input name="image" value={addCoin.image} onChange={handleChange}></input>
+                    <button className="border" onClick={handleSubmitCreateCoin}>Create Coin</button>
                 </div>
             </div>
-            <div className="flex flex-col gap-2 mt-4">
-                <span>symbol</span>
-                <input name="symbol" value={addCoin.symbol} onChange={handleChange}></input>
-                <span>name</span>
-                <input name="name" value={addCoin.name} onChange={handleChange}></input>
-                <span>image</span>
-                <input name="image" value={addCoin.image} onChange={handleChange}></input>
-                <button className="border" onClick={handleSubmitCreateCoin}>Create Coin</button>
-            </div>
-        </div>
+        </>
     )
 }

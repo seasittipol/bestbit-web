@@ -8,6 +8,7 @@ import ProtectRoute from '../features/auth/components/ProtectRoute'
 import RegisterPage from '../pages/RegisterPage'
 import RedirectRoute from '../features/auth/components/RedirectRoute'
 import DepositPage from '../pages/DepositPage'
+import TransactionPage from '../pages/TransactionPage'
 
 const router = createBrowserRouter([
     {
@@ -20,14 +21,14 @@ const router = createBrowserRouter([
     },
     {
         path: '/',
-        element: (
+        element:
             <>
                 <ProtectRoute>
                     <Header />
                     <Outlet />
                 </ProtectRoute>
             </>
-        ),
+        ,
         children: [
             {
                 path: '',
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path: 'dashboard/deposit',
                 element: <DepositPage />
+            },
+            {
+                path: 'dashboard/transaction',
+                element: <TransactionPage />
             }
         ]
     }

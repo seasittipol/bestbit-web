@@ -4,10 +4,12 @@ import priceTicket from "../../../api/current-price"
 import Button from "../../../layouts/Button";
 import SpotTradeModal from "./SpotTradeModal";
 import useAuth from '../hooks/use-auth'
+import iconTicket from "../../../api/icon-coin";
 
 export default function MarketForm() {
     const { authUser } = useAuth()
     const [price, setPrice] = useState([])
+    const [icon, setIcon] = useState([])
     const [loading, setLoading] = useState(true)
     const [openTrade, setOpenTrade] = useState(false)
     const [priceTrade, setPriceTrade] = useState(0)
@@ -18,11 +20,14 @@ export default function MarketForm() {
             const fetchPrice = async () => {
                 const response = await priceTicket()
                 setPrice(response)
+
                 setLoading(false)
                 console.log(price);
+                console.log(icon);
             }
             fetchPrice()
-        }, 5 * 1000)
+        }, 2 * 1000)
+
     })
 
     const handlerToggleModal = e => {
@@ -57,7 +62,7 @@ export default function MarketForm() {
                                 <div className="flex gap-2">
                                     <img
                                         className="w-6 h-6 rounded-full"
-                                        src="https://i.pinimg.com/736x/16/af/11/16af11cfede502db66e20f547474da79.jpg"
+                                        src={el?.data.detail[0].iconImage}
                                     />
                                     <span>{el?.data.symbol}</span>
                                 </div>
@@ -72,7 +77,7 @@ export default function MarketForm() {
                                 <div className="flex gap-2">
                                     <img
                                         className="w-6 h-6 rounded-full"
-                                        src="https://i.pinimg.com/736x/16/af/11/16af11cfede502db66e20f547474da79.jpg"
+                                        src={el?.data.detail[0].iconImage}
                                     />
                                     <span>{el?.data.symbol}</span>
                                 </div>

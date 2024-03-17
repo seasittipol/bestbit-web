@@ -71,7 +71,8 @@ export default function SpotTradeModal(props) {
                     headers: { Authorization: `Bearer ${token}` }
                 })
                 console.log(res);
-                toast.success('Order buy successfully')
+                onSuccess()
+                toast.success('Order sell successfully')
             } else {
                 toast.error('Invalid input')
             }
@@ -125,7 +126,7 @@ export default function SpotTradeModal(props) {
                         />
                         <span>USDT</span>
                     </div>
-                    <Button bg='red' name='BUY' height={50} onClick={handlerOrderWithSell} />
+                    <Button bg='red' name='SELL' height={50} onClick={handlerOrderWithSell} />
                 </div>
                 <button className="absolute top-1 right-2" onClick={onClose}>&#10005;</button>
             </div>

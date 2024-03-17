@@ -6,14 +6,17 @@ import { toast } from "react-toastify";
 import symbolTicket from "../../../api/sympol-coin";
 import Button from "../../../layouts/Button";
 import { Link } from "react-router-dom";
+import { useRef } from "react";
 
 const initialize = {
     symbol: '',
     name: '',
-    // image: null
+    image: null
 }
 
 export default function CoinTable() {
+    const fileEl = useRef()
+    const [file, setFile] = useState(null)
     const [coinName, setCoinName] = useState([])
     const [coinSymbol, setCoinSymbol] = useState([])
     const [addCoin, setAddCoin] = useState(initialize)
@@ -27,9 +30,9 @@ export default function CoinTable() {
             try {
                 const res = await nameTicket()
                 const res2 = await symbolTicket()
-                console.log(1);
                 if (res) setCoinName(res)
                 if (res2) setCoinSymbol(res2)
+                console.log(res2);
             } catch (err) {
                 console.log(err);
             }
@@ -39,9 +42,7 @@ export default function CoinTable() {
 
     const handleChange = e => {
         const coinObj = { ...addCoin }
-        const a = e.target.name
-        const b = e.target.value
-        coinObj[a] = b
+        coinObj[e.target.name] = e.target.value
         console.log(coinObj);
         setAddCoin(coinObj)
     }
@@ -49,18 +50,25 @@ export default function CoinTable() {
     const token = localStorage.getItem('ACCESS_TOKEN')
 
     const handleSubmitCreateCoin = async () => {
-        console.log(addCoin);
-        await axios.post('http://localhost:8000/admins/create-coin', addCoin, {
+        const formData = new FormData()
+        formData.append('iconImage', file)
+        const res = await axios.patch(`http://localhost:8000/admins/create-coin`, formData, {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+        const data = { ...addCoin }
+        data.iconImage = res.data.url
+        console.log(data);
+        await axios.post('http://localhost:8000/admins/create-coin', data, {
             headers: { Authorization: `Bearer ${token}` }
         })
         setAddCoin(initialize)
+        console.log(addCoin);
         toast.success('Create coin successs')
     }
 
     const handleEditCoin = e => {
         setEditRow(e.target.name)
         setIsEdit(true)
-        console.log('best lhor', e.target.name);
     }
 
     const handleChangeEditCoin = e => {
@@ -105,41 +113,43 @@ export default function CoinTable() {
         toast.success('Delete coin successs')
     }
 
+    console.log(coinSymbol);
     return (
         <>
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-4">
                 <Link to='/dashboard/transaction'>
                     <Button name='Transaction' />
                 </Link>
+                <Link to='/dashboard/user'>
+                    <Button name='All User' />
+                </Link>
             </div>
-            <div className="bg-slate-600 min-h-10 rounded-lg py-2 px-4 fle flex-colx items-center">
-                <div className="grid grid-cols-3">
-                    <div className="flex justify-between">
+            <div className="bg-slate-600 min-h-10 rounded-lg py-2 px-4 flex flex-col items-center">
+                <div className="w-4/5">
+                    <div className="flex gap-24">
                         <span>Symbol</span>
                         <span>Name</span>
                     </div>
-                    <div></div>
-                    <div></div>
                 </div>
-                <div className="flex gap-10">
+                <div className="flex gap-8 w-4/5">
                     <div className="flex flex-col mt-2 gap-2">
                         {coinSymbol?.map(el => (
-                            <div className="flex gap-2">
+                            <div key={el.id} className="flex gap-2">
                                 <img
                                     className="w-6 h-6 rounded-full"
-                                    src="https://i.pinimg.com/736x/16/af/11/16af11cfede502db66e20f547474da79.jpg"
+                                    src={el.iconImage}
                                 />
-                                <div className="h-[26px]" key={el}>{el} </div>
+                                <div className="h-[26px]">{el.symbol} </div>
                             </div>
                         ))}
                     </div>
-                    <div>
+                    <div className="w-full">
                         {coinName?.map(el => (
-                            <div key={el} className="grid grid-cols-2 mt-2 gap-4">
+                            <div key={el} className="flex mt-2 gap-4 justify-between px-">
                                 <div className="flex gap-2">
                                     {isEdit && editRow == el
-                                        ? <input value={editName || el} onChange={handleChangeEditCoin}></input>
-                                        : <span>{el}</span>
+                                        ? <input className="outline-none" value={editName || el} onChange={handleChangeEditCoin}></input>
+                                        : <span className="h-[26px]">{el}</span>
                                     }
                                 </div>
                                 <div className="flex gap-4">
@@ -154,13 +164,40 @@ export default function CoinTable() {
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 mt-4">
-                    <span>symbol</span>
-                    <input name="symbol" value={addCoin.symbol} onChange={handleChange}></input>
-                    <span>name</span>
-                    <input name="name" value={addCoin.name} onChange={handleChange}></input>
-                    <span>image</span>
-                    <input name="image" value={addCoin.image} onChange={handleChange}></input>
-                    <button className="border" onClick={handleSubmitCreateCoin}>Create Coin</button>
+                    <div className="flex justify-center">
+                        <div className="flex flex-col gap-1">
+                            <span>Symbol</span>
+                            <input name="symbol" className="outline-none" value={addCoin.symbol} onChange={handleChange}></input>
+                            <span>Name</span>
+                            <input name="name" className="outline-none" value={addCoin.name} onChange={handleChange}></input>
+                            <span>Icon</span>
+                            <div className="flex gap-4 items-center justify-center">
+                                <img
+                                    className="w-6 h-6 rounded-full"
+                                    src={file
+                                        ? URL.createObjectURL(file)
+                                        : "https://i.pinimg.com/736x/16/af/11/16af11cfede502db66e20f547474da79.jpg"}
+                                />
+                                <input
+                                    type='file'
+                                    className='hidden'
+                                    ref={fileEl}
+                                    onChange={e => {
+                                        if (e.target.files[0]) {
+                                            setFile(e.target.files[0])
+                                        }
+                                    }}
+                                />
+                                <Button
+                                    name='Add Icon'
+                                    className='bg-gray-500 text-black px-4 py-1 rounded-lg font-semibold'
+                                    onClick={() => fileEl.current.click()}
+                                />
+                                <Button name='Create Coin' bg='amber' className="border" onClick={handleSubmitCreateCoin} />
+                            </div>
+                        </div>
+                    </div>
+                    {/* <input name="image" value={addCoin.image} onChange={handleChange}></input> */}
                 </div>
             </div>
         </>

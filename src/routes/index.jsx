@@ -9,6 +9,8 @@ import RegisterPage from '../pages/RegisterPage'
 import RedirectRoute from '../features/auth/components/RedirectRoute'
 import DepositPage from '../pages/DepositPage'
 import TransactionPage from '../pages/TransactionPage'
+import UserPage from '../pages/admin/UserPage'
+import AdminContextProvider from '../features/admin/context/AdminContext'
 
 const router = createBrowserRouter([
     {
@@ -45,6 +47,13 @@ const router = createBrowserRouter([
             {
                 path: 'dashboard/transaction',
                 element: <TransactionPage />
+            },
+            {
+                path: 'dashboard/user',
+                element:
+                    <AdminContextProvider>
+                        <UserPage />
+                    </AdminContextProvider>
             }
         ]
     }

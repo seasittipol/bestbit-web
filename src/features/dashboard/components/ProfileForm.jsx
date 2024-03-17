@@ -9,6 +9,7 @@ export default function ProfileForm() {
     const fileEl = useRef()
     const [file, setFile] = useState(null)
     const [name, setName] = useState(authUser.name)
+    const [image, setImage] = useState(authUser.profileImage)
     const [isEdit, setIsEdit] = useState(false)
 
     const handleEdit = () => {
@@ -33,7 +34,9 @@ export default function ProfileForm() {
                     headers: { Authorization: `Bearer ${token}` }
                 })
                 console.log(res.data);
+                setName(res.data.name)
                 console.log(res2.data);
+                setImage(res2.data.profileImage)
                 console.log('save');
             }
         } catch (err) {
@@ -60,14 +63,17 @@ export default function ProfileForm() {
             {isEdit
                 ? (<img
                     className="h-32 w-32 rounded-full"
-                    src={file ? URL.createObjectURL(file)
+                    src={file
+                        ? URL.createObjectURL(file)
                         : authUser
-                            ? authUser.profileImage
+                            ? image
+                                ? image
+                                : profileImage
                             : profileImage}
                 />)
                 : (<img
                     className="h-32 w-32 rounded-full"
-                    src={authUser.profileImage ? authUser.profileImage : profileImage}
+                    src={image ? image : profileImage}
                 />)
             }
             <div className='w-full h-full flex justify-between '>

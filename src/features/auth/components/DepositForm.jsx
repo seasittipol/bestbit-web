@@ -31,13 +31,11 @@ export default function DepositForm() {
     }
 
     const handleSaveAmount = e => {
-        console.log(e.target);
         const amount = e.target.name.split(' ')[0].split(',').join('')
         setAmount(amount)
     }
 
     const handleChange = e => {
-        console.log(amount);
         setAmount(e.target.value)
     }
 

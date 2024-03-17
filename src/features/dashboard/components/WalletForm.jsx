@@ -36,7 +36,7 @@ export default function WalletForm() {
                         <div className="flex gap-2">
                             <img
                                 className="w-6 h-6 rounded-full"
-                                src="https://i.pinimg.com/736x/16/af/11/16af11cfede502db66e20f547474da79.jpg"
+                                src={el.coin.iconImage}
                             />
                             <span>{el.coin.symbol}</span>
                         </div>

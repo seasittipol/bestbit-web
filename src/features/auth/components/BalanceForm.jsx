@@ -9,7 +9,7 @@ export default function BalanceForm() {
         const res = await axios.get('http://localhost:8000/users/wallet-balance', {
             headers: { Authorization: `Bearer ${token}` }
         })
-        setMoney(res.data.amountBaht)
+        setMoney(res.data.amountUsd)
     }
     getBalanceWallet()
     return (
@@ -18,7 +18,7 @@ export default function BalanceForm() {
                 <p>Balanace</p>
                 <div className="flex gap-2 items-end">
                     <p className="font-bold text-3xl">
-                        {money}
+                        {money || '0'}
                     </p>
                     <span> USDT</span>
                 </div>
